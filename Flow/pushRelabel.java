@@ -10,7 +10,7 @@ import java.util.*;
 
 class pushRelabel {
 
-    int MAXN = 0;
+    int MAXN; // bas karo vellepanti for the love of god
     ArrayList<edge>[] adj;
     ArrayList<Integer>[] list;
     ArrayList<Integer>[] gap;
