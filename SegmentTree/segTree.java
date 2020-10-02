@@ -32,7 +32,7 @@ public class segTree{
         tree[idx] = val;
 
         for(int i = idx; i > 1; i /= 2){
-            tree[i/2] = tree[i] + tree[i^1];
+            tree[i/2] = Math.max(tree[i], tree[i^1]);
         }
     }
 }
