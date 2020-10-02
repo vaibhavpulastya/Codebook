@@ -2,7 +2,7 @@ package SegmentTree;
 
 public class segTree{
     int[] tree;
-    int N;
+    int N;  // !!! don't mess up the value of N !!! - it's the number of elements 
 
     segTree(int N, int[] a){
         tree = new int[2*N];
@@ -12,14 +12,17 @@ public class segTree{
 
     void build(int N, int[] a){
         for(int i = N; i < 2*N; i++) tree[i] = a[i - N];
-        for (int i = N - 1; i > 0; --i) tree[i] = tree[i<<1]+ tree[i<<1|1];
+        for (int i = N - 1; i > 0; --i) tree[i] = Math.max(tree[i<<1], tree[i<<1|1]);
     }
 
-    int query(int l, int r) {
+    int query(int l, int r) { // [l,r)
         int res = 0;
-        for (l += N, r += N; l < r; l >>= 1, r >>= 1) {
-            if ((l & 1) == 1) res += tree[l++];
-            if ((r & 1) == 1) res += tree[--r];
+        l += N;
+        r += N;
+        while(l < r) {
+            if ((l&1) > 0) res = Math.max(res, tree[l++]);
+            if ((r&1) > 0) res = Math.max(res, tree[--r]);
+            l >>= 1; r >>= 1;
         }
         return res;
     }
@@ -28,8 +31,8 @@ public class segTree{
         idx += N;
         tree[idx] = val;
 
-        for(int i = idx; i >= 1; i /= 2){
-            tree[i/2] = tree[i] + tree[i^1];
+        for(int i = idx; i > 1; i /= 2){
+            tree[i/2] = Math.max(tree[i], tree[i^1]);
         }
     }
 }
